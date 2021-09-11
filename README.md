@@ -43,17 +43,20 @@ Array
 单个获取
 
 ```php
-//获取title
+//获取协议
 $urlInfo->getScheme();
 
-//获取img
-$urlInfo->getImg();
+//获取域名
+$urlInfo->getHost();
 
-//获取music
-$urlInfo->getMusic();
+//获取端口
+$urlInfo->getPort();
 
-//获取无水印url
-$urlInfo->getUrl();
+//获取顶级域名
+$urlInfo->getDomain();
+
+//获取域名后缀
+$urlInfo->getSuffix();
 
 ```
 
