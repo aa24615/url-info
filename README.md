@@ -66,7 +66,7 @@ $urlInfo->getSuffix();
 3. 在你的本地修改完成审阅过后提交到你的仓库
 4. 提交 PR 并描述你的修改，等待合并
 > 注: 本项目同时发布在gitee 请使用github提交      
-> github: https://github.com/aa24615/douyin
+> github: https://github.com/aa24615/url-info
 
 ## License
 
