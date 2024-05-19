@@ -30,6 +30,10 @@ class UrlInfo
     /**
      * @var array
      */
+    protected $pathInfo = null;
+    /**
+     * @var array
+     */
     protected $domainInfo = null;
     /**
      * @var string[]
@@ -55,8 +59,6 @@ class UrlInfo
     ];
 
 
-
-
     /**
      * UrlInfo constructor.
      *
@@ -73,7 +75,6 @@ class UrlInfo
             $this->setSuffixs($suffixs);
         }
     }
-
 
     /**
      * setUrl.
@@ -119,6 +120,25 @@ class UrlInfo
     }
 
     /**
+     * getPathInfo.
+     *
+     * @return array
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+
+    protected function getPathInfo()
+    {
+        if (is_null($this->pathInfo)) {
+            $isUrl = preg_match('/https?:\/\/(?:[a-z0-9]+(?:-[a-z0-9]+)*\.)+[a-z]{2,}(?:\:[0-9]{2,5})?(?:\/[^\s]*)/',$this->url);
+            if($isUrl){
+                $this->pathInfo = pathinfo(explode('?',$this->url)[0] ?? '');
+            }
+        }
+        return $this->pathInfo;
+    }
+
+    /**
      * getDomainInfo.
      *
      * @return array
@@ -130,7 +150,7 @@ class UrlInfo
         $this->getParseUrl();
 
         if (is_null($this->domainInfo)) {
-            preg_match("/[^\\.]+\.(".join('|', $this->suffixs).")/", $this->getHost(), $matches);
+            preg_match("/[^\\.]+\.(" . join('|', $this->suffixs) . ")/", $this->getHost(), $matches);
             $this->domainInfo = $matches;
         }
 
@@ -147,13 +167,26 @@ class UrlInfo
     public function getData()
     {
         return [
+            'url'    => $this->getUrl(),
             'scheme' => $this->getScheme(),
             'host' => $this->getHost(),
             'port' => $this->getPort(),
             'domain' => $this->getDomain(),
             'suffix' => $this->getSuffix(),
+            'base_url' => $this->getBaseUrl(),
+            'pwd_url' => $this->getPwdUrl(),
+            'dirname' => $this->getDirname(),
+            'filename' => $this->getFilename(),
+            'extension' => $this->getExtension(),
+            'query' => $this->getQuery(),
+            'file' => $this->getFile(),
         ];
     }
+
+    public function getUrl(){
+        return $this->url;
+    }
+
     /**
      * getScheme.
      *
@@ -205,6 +238,7 @@ class UrlInfo
 
         return $port;
     }
+
     /**
      * getDomain.
      *
@@ -216,6 +250,7 @@ class UrlInfo
     {
         return $this->getDomainInfo()[0] ?? '';
     }
+
     /**
      * getSuffix.
      *
@@ -226,5 +261,40 @@ class UrlInfo
     public function getSuffix()
     {
         return $this->getDomainInfo()[1] ?? '';
+    }
+
+
+    public function getBaseUrl()
+    {
+        return $this->getScheme() . '://' . $this->getHost() . (($this->getPort() == 80 || $this->getPort() == 443) ? '' : ':' . $this->getPort());
+    }
+
+    public function getExtension()
+    {
+        return $this->getPathInfo()['extension'] ?? '';
+    }
+
+    public function getFilename()
+    {
+        return $this->getPathInfo()['filename'] ?? '';
+    }
+
+    public function getDirname()
+    {
+        return str_replace($this->getBaseUrl(),'',($this->getPathInfo()['dirname'] ?? ''));
+    }
+
+    public function getQuery()
+    {
+        return $this->getParseUrl()['query'] ?? '';
+    }
+
+    public function getPwdUrl(){
+        return $this->getPathInfo()['dirname'] ?? '';
+    }
+
+    public function getFile()
+    {
+        return $this->getFilename().($this->getExtension() ? '.'.$this->getExtension() : '');
     }
 }

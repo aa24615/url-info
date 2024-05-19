@@ -18,26 +18,39 @@ composer require zyan/url-info -vvv
 ## 用法
 
 ```php
+
 use Zyan\UrlInfo\UrlInfo;
 
-$urlInfo = new UrlInfo('http://www.baidu.com');
+$urlInfo = new UrlInfo('http://www.baidu.com/abc/123/test.php?a=2');
+
 ```
 
 获取所有信息
 
 ```php
+
 $urlInfo->getData();
 
 /*
+
 Array
 (
+    [url] => http://www.baidu.com/123/abc/123.php?abc=1
     [scheme] => http
     [host] => www.baidu.com
     [port] => 80
     [domain] => baidu.com
     [suffix] => com
+    [base_url] => http://www.baidu.com
+    [pwd_url] => http://www.baidu.com/123/abc
+    [dirname] => /123/abc
+    [filename] => 123
+    [extension] => php
+    [query] => abc=1
+    [file] => 123.php
 )
 */
+
 ```
 
 单个获取
@@ -57,6 +70,31 @@ $urlInfo->getDomain();
 
 //获取域名后缀
 $urlInfo->getSuffix();
+
+//获取文件后缀
+$urlInfo->getExtension();
+
+//获取根URL
+$urlInfo->getBaseUrl();
+
+//获取文件全名
+$urlInfo->getFile();
+
+//获取文件名(不带后缀)
+$urlInfo->getFilename();
+
+//获取传入的URL
+$urlInfo->getUrl();
+
+//获取GET参数
+$urlInfo->getQuery();
+
+//获取文件当前URL
+$urlInfo->getPwdUrl();
+
+//获取文件当前目录
+$urlInfo->getDirname();
+
 
 ```
 
