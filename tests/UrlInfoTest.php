@@ -49,6 +49,17 @@ class UrlInfoTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($data['dirname']=='/abc');
 
     }
+    public function testIslaraveladmin(){
+
+        $urlInfo = new UrlInfo('http://127.0.0.1:8000/admin/auth/login');
+        $data = $urlInfo->getData();
+
+        $this->assertTrue($data['base_url']=='http://127.0.0.1:8000');
+        $this->assertTrue($data['port']=='8000');
+        $this->assertTrue($data['filename']=='login');
+        $this->assertTrue($data['dirname']=='/admin/auth');
+
+    }
 
 
     public function testBase(){
@@ -62,10 +73,6 @@ class UrlInfoTest extends \PHPUnit\Framework\TestCase
 
     }
 
-    public function testTest(){
-        $urlInfo = new UrlInfo('http://www.baidu.com/123/abc/123.php?abc=1');
 
-
-    }
 
 }
