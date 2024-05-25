@@ -131,7 +131,6 @@ class UrlInfo
     {
         if (is_null($this->pathInfo)) {
             $isUrl = preg_match('/https?:\/\/(?:(?:[a-z0-9]+\.)+[a-z]{2,}|(?:\d{1,3}\.){3}\d{1,3})(?:\:[0-9]+)?\/(\d|\S){1,}/',$this->url);
-            var_dump($isUrl);
             if($isUrl){
                 $this->pathInfo = pathinfo(explode('?',$this->url)[0] ?? '');
             }
