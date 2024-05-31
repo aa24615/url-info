@@ -150,8 +150,13 @@ class UrlInfo
         $this->getParseUrl();
 
         if (is_null($this->domainInfo)) {
-            preg_match("/[^\\.]+\.(" . join('|', $this->suffixs) . ")/", $this->getHost(), $matches);
-            $this->domainInfo = $matches;
+            $arr = explode('.',$this->getHost());
+            $count = count($arr);
+
+            $this->domainInfo = [
+                'domain' => $arr[$count-2].'.'.$arr[$count-1],
+                'suffix' => $arr[$count-1],
+            ];
         }
 
         return $this->domainInfo;
@@ -248,7 +253,7 @@ class UrlInfo
      */
     public function getDomain()
     {
-        return $this->getDomainInfo()[0] ?? '';
+        return $this->getDomainInfo()['domain'];
     }
 
     /**
@@ -260,7 +265,7 @@ class UrlInfo
      */
     public function getSuffix()
     {
-        return $this->getDomainInfo()[1] ?? '';
+        return $this->getDomainInfo()['suffix'] ?? '';
     }
 
 
