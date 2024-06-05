@@ -77,6 +77,8 @@ class UrlInfoTest extends \PHPUnit\Framework\TestCase
         $urlInfo = new UrlInfo('http://www.cnwav.cn/abc/123.php');
         $data = $urlInfo->getData();
 
+
+
         var_dump($data);
     }
 

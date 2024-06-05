@@ -149,13 +149,21 @@ class UrlInfo
     {
         $this->getParseUrl();
 
-        if (is_null($this->domainInfo)) {
-            $arr = explode('.',$this->getHost());
-            $count = count($arr);
+//        if (is_null($this->domainInfo)) {
+//            $arr = explode('.',$this->getHost());
+//            $count = count($arr);
+//
+//            $this->domainInfo = [
+//                'domain' => $arr[$count-2].'.'.$arr[$count-1],
+//                'suffix' => $arr[$count-1],
+//            ];
+//        }
 
+        if (is_null($this->domainInfo)) {
+            preg_match("/[A-Za-z0-9]+\.(" . join('|', $this->suffixs) . ")$/", $this->getHost(), $matches);
             $this->domainInfo = [
-                'domain' => $arr[$count-2].'.'.$arr[$count-1],
-                'suffix' => $arr[$count-1],
+                'domain' => $matches[0] ?? '',
+                'suffix' => $matches[1] ?? '',
             ];
         }
 
