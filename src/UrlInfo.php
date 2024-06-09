@@ -87,7 +87,7 @@ class UrlInfo
      */
     public function setUrl(string $url)
     {
-        $this->url = strtolower(urldecode($url));
+        $this->url = trim(strtolower(urldecode($url)));
     }
 
     /**
@@ -221,7 +221,7 @@ class UrlInfo
      */
     public function getHost()
     {
-        return $this->getParseUrl()['host'] ?? '';
+        return trim($this->getParseUrl()['host'] ?? '');
     }
 
     /**
