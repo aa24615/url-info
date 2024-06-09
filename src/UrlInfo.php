@@ -160,7 +160,7 @@ class UrlInfo
 //        }
 
         if (is_null($this->domainInfo)) {
-            preg_match("/[A-Za-z0-9]+\.(" . join('|', $this->suffixs) . ")$/", $this->getHost(), $matches);
+            preg_match("/[A-Za-z0-9\-]+\.(" . join('|', $this->suffixs) . ")$/", $this->getHost(), $matches);
             $this->domainInfo = [
                 'domain' => $matches[0] ?? '',
                 'suffix' => $matches[1] ?? '',
